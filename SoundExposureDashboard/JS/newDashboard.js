@@ -206,7 +206,7 @@ let sketchPrototype = function (p) {
   // "public" variables
   p.bandRange = { start: 0, end: octBands.length };
   p.energyRange = { min: 0, max: 140 };
-  p.maxDose = 360;
+  p.maxDose = 3600;
   p.graph = '';
   p.graphDescription = '';
   p.curDose = 0;
