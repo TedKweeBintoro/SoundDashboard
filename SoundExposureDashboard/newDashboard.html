@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <style>
+      * {
+        font-family: 'Montserrat', Sans-Serif;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        overflow: hidden;
+        background-color: #F0F0F0;
+        color: black;
+      }
+      .dark-mode {
+        background-color: #282828;
+        color: white;
+      }
+      div.controls {
+        text-align: center;
+        padding-bottom: 10px;
+      }
+      div.button {
+        margin: auto;
+      }
+      div.grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+      }
+      div.graph {
+        flex: 0 0 32%;
+      }
+      .button {
+        display: inline-block;
+        padding: 10px 10px;
+        font-size: 12px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #4caf50;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 5px #999;
+      }
+      .button:hover {
+        background-color: #3e8e41;
+      }
+      .button:active {
+        background-color: #3e8e41;
+        box-shadow: 0 5px #999;
+        transform: translateY(4px);
+      }
+      .darkbutton {
+        display: inline-block;
+        padding: 10px 10px;
+        font-size: 12px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: DarkBlue;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 5px #000;
+      }
+      .darkbutton:hover {
+        background-color: #000054;
+      }
+      .darkbutton:active {
+        background-color: #000054;
+        box-shadow: 0 5px #000;
+        transform: translateY(4px);
+      }
+      .deadbutton {
+        display: inline-block;
+        padding: 10px 10px;
+        font-size: 12px;
+        cursor: not-allowed;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #b5b5b5;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 5px #999;
+      }
+      .deaddarkbutton {
+        display: inline-block;
+        padding: 10px 10px;
+        font-size: 12px;
+        cursor: not-allowed;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #373737;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 5px #000;
+      }
+      .alert {
+        width: 100%;
+        height: 100%;
+        margin: auto;
+        background-color: #f7b42c;
+        background-image: linear-gradient(315deg, #f7b42c 0%, #fc575e 74%);
+        font-size: 72px;
+        text-align: center;
+        justify-content: center;
+      }
+      .alert {
+        color: white;
+        font: bold 52px Helvetica, Arial, Sans-Serif;
+        text-shadow: 1px 1px #fe4902, 2px 2px #fe4902, 3px 3px #fe4902;
+        -webkit-transition: all 0.12s ease-out;
+        -moz-transition: all 0.12s ease-out;
+        -ms-transition: all 0.12s ease-out;
+        -o-transition: all 0.12s ease-out;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%; 
+        overflow: auto; 
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4); 
+      }
+      .modal-content {
+        background-color: #4caf50;
+        margin: 15% auto; 
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; 
+      }
+    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script src="./JS/p5/p5.js"></script>
+    <script src="./JS/p5/addons/p5.sound.js"></script>
+    <title>Sound Dashboard</title>
+    <link href="./CSS/newDashboard.css" rel="stylesheet" type="text/css">
+    <script src="https://kit.fontawesome.com/b7bbe6e645.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" type="image/png" href="./Images/logo2.png">
+  </head>
+  <body>
+    <script src="JS/newDashboard.js"></script>
+    <script src="JS/amp.js"></script>
+    <!--all icons from fontawesome.com: might not display offline-->
+    <div class="controls">
+      <i class="fa fa-question-circle" style="float:left; cursor:help; color:Blue; margin:10px" title="Hover over a button to see what it does!" id="help"></i>
+      <button class="button" onclick="start()" title="Starts your recording session." id="start"><i class="fas fa-play"></i></button>
+      <button class="deadbutton" onclick="pause()" title="Pauses your recording session." id="pause"><i class="fas fa-pause"></i></button>
+      <button class="deadbutton" onclick="stop()" title="Ends your recording session and shows you an analysis of your sound exposure." id="stop"><i class="fas fa-stop"></i></button>
+      <button class="button"      onclick="window.location.href='dashboard.html'" title="Takes you to the original version of the dashboard that lets you see how things are measured."><i class="fas fa-music"></i></button>
+      <!-- takes you to old documentation as of june 22 2020-->
+      <button class="button" onclick="window.open('https://drive.google.com/file/d/1wgjq-TnbNUft9wAGxisZvTJrvqtnNzIt/view?usp=sharing')" title="Takes you to the user documentation for the dashboard."><i class="far fa-file-alt"></i></button>
+      <button class="button" onclick="darkMode()" title="Toggles dark mode." id="darkMode"><i class="fas fa-moon" id="dmIcon"></i></button></button>
+      <input style="float:right; margin:10px" type="checkbox" id="demo" onclick="demo()" title="Increases the speed of the sound accumulation so that you can see the dials change easily.">
+      <label style="float:right; margin-top:10px">DEMO</label>
+    </div>
+  </body>
+  <div class="warning" style="width:100%"></div>
+  <div class="grid">
+      <div class="graph"></div>
+      <div class="graph"></div>
+      <div class="graph"></div>
+  </div>
+  <div class="eq"></div>
+  <div class="alert" id="alert"></div>
+</html>
